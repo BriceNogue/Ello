@@ -27,7 +27,6 @@ class SelectContact : AppCompatActivity() {
 
     private lateinit var contactAdapter : ContactAdapter
 
-    var test = 0
 
    /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_btn_top, menu)
