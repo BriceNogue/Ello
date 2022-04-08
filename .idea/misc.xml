@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/btn_login_style.xml" value="0.255" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/btn_main_contacts.xml" value="0.255" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/btn_man_message.xml" value="0.255" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/btn_new_msg_style.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/cicle_btn_style.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/edit_text_style.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic__search_24.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic_add_msg.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic_check.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic_favorite_24.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic_more_24.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic_person_2.xml" value="0.255" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/drawable/ic_send.xml" value="0.2645" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/activity_inbox_sms.xml" value="0.2427536231884058" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/activity_new_message.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/activity_select_contact.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/contact_list_fragment.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/contacts_list.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/contacts_list_model.xml" value="0.2427536231884058" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/liste_de_discution.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/my_message.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/other_message.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/layout/select_contact.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/app_bar_btn_top.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/app_bar_top_select_contact.xml" value="0.259375" />
+        <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/top_app_bar.xml" value="0.259375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

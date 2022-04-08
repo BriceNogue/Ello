@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ello</string>
+    <string name="main_page_title"> </string>
+    <string name="search">Search</string>
+    <string name="content_description_search"> </string>
+    <string name="favorite">Favorite</string>
+    <string name="content_description_favorite"> </string>
+    <string name="more">User</string>
+    <string name="content_description_more"> </string>
+</resources>
