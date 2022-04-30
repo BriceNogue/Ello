@@ -11,7 +11,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ello.MainActivity
+import com.example.ello.main_package.MainActivity
 import com.example.ello.R
 import com.example.ello.select_contact.SelectContact
 

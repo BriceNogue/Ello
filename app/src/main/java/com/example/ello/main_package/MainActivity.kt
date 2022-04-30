@@ -1,6 +1,8 @@
-package com.example.ello
+package com.example.ello.main_package
 
 import android.Manifest
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,8 +11,9 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.ello.select_contact.SelectContact
+import com.example.ello.R
 import com.example.ello.send_message.NewMessage
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        openSMSappChooser(applicationContext)
 
         var btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
 
@@ -37,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
         super.onRequestPermissionsResult(RC, per, PResult)
         when (RC) {
-            SelectContact.RequestPermissionCode -> if (PResult.size > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+            RequestPermissionCode -> if (PResult.size > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(
                     this@MainActivity,
                     "Permission Granted, Now your application can access message.",
@@ -72,9 +77,31 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.RECEIVE_SMS,
                     Manifest.permission.BROADCAST_SMS,
                     Manifest.permission.RECEIVE_MMS
-                ), SelectContact.RequestPermissionCode
+                ),  RequestPermissionCode
             )
         }
     }
 
+    companion object {
+        const val RequestPermissionCode = 1
+    }
+
+    fun openSMSappChooser(context: Context) {
+        val packageManager: PackageManager = context.getPackageManager()
+        val componentName = ComponentName(context, MainActivity::class.java)
+        packageManager.setComponentEnabledSetting(
+            componentName,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
+        val selector = Intent(Intent.ACTION_MAIN)
+        selector.addCategory(Intent.CATEGORY_APP_MESSAGING)
+        selector.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(selector)
+        packageManager.setComponentEnabledSetting(
+            componentName,
+            PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
+            PackageManager.DONT_KILL_APP
+        )
+    }
 }

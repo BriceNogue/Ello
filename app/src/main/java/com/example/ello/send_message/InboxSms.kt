@@ -11,7 +11,7 @@ import android.telephony.SmsManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ello.MainActivity
+import com.example.ello.main_package.MainActivity
 import com.example.ello.R
 
 class InboxSms : AppCompatActivity() {

@@ -3,10 +3,8 @@ package com.example.ello
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import android.widget.Button
-import java.security.cert.PKIXRevocationChecker
+import com.example.ello.main_package.MainActivity
 
 class Login : AppCompatActivity() {
 
@@ -17,7 +15,7 @@ class Login : AppCompatActivity() {
         var btnLogin = findViewById<Button>(R.id.btn_login)
 
         btnLogin.setOnClickListener(){
-            var intent = Intent(this,MainActivity::class.java)
+            var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -49,8 +49,8 @@ class SelectContact : AppCompatActivity() {
         val recyclerview = findViewById<RecyclerView>(R.id.rcv_select_contact)
         recyclerview.layoutManager = LinearLayoutManager(this)
 
-        getContact()
         enableRuntimePermission()
+        getContact()
 
 
     }
@@ -126,7 +126,7 @@ class SelectContact : AppCompatActivity() {
 
 
     private fun getContactsIntoMutableList(){
-       /* cursor = contentResolver.query(
+        cursor = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             null,
             null,
@@ -142,7 +142,26 @@ class SelectContact : AppCompatActivity() {
             listContact!!.sortByDescending { it.contact_name }
             listContact!!.reverse()
         }
-        cursor!!.close()*/
+        cursor!!.close()
+    }
+
+    override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
+        super.onRequestPermissionsResult(RC, per, PResult)
+        when (RC) {
+            RequestPermissionCode -> if (PResult.size > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(
+                    this@SelectContact,
+                    "Permission Granted, Now your application can access CONTACTS.",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@SelectContact,
+                    "Permission Canceled, Now your application cannot access CONTACTS.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     private fun enableRuntimePermission() {
@@ -162,25 +181,6 @@ class SelectContact : AppCompatActivity() {
                     Manifest.permission.READ_CONTACTS
                 ), RequestPermissionCode
             )
-        }
-    }
-
-    override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
-        super.onRequestPermissionsResult(RC, per, PResult)
-        when (RC) {
-            RequestPermissionCode -> if (PResult.size > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(
-                    this@SelectContact,
-                    "Permission Granted, Now your application can access CONTACTS.",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                Toast.makeText(
-                    this@SelectContact,
-                    "Permission Canceled, Now your application cannot access CONTACTS.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
         }
     }
 
