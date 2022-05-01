@@ -31,6 +31,9 @@
         <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/app_bar_btn_top.xml" value="0.259375" />
         <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/app_bar_top_select_contact.xml" value="0.259375" />
         <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/top_app_bar.xml" value="0.259375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/liste_de_discution.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/not_default_app.xml" value="0.35625" />
       </map>
     </option>
   </component>
