@@ -14,8 +14,9 @@ import com.example.ello.select_contact.ContactAdapter
 import com.example.ello.select_contact.ContactModel
 import com.example.ello.send_message.InboxSms
 
-class MainAdapter (context: Context, var listDisc : MutableList<MainModel>) :
+class MainAdapter (var context: Context, var listDisc : MutableList<MainModel>) :
     RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+
     inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         //val cPicture: ImageView = itemView.findViewById(R.id.contact_picture)
@@ -33,7 +34,7 @@ class MainAdapter (context: Context, var listDisc : MutableList<MainModel>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.MainViewHolder {
-        val view = LayoutInflater.from(parent.context)
+        var view = LayoutInflater.from(parent.context)
             .inflate(R.layout.liste_de_discution, parent, false)
 
         return MainViewHolder(view)
@@ -41,13 +42,13 @@ class MainAdapter (context: Context, var listDisc : MutableList<MainModel>) :
 
     override fun onBindViewHolder(holder: MainAdapter.MainViewHolder, position: Int) {
 
-        var newList = listDisc[position]
+        var newList = listDisc!![position]
         holder.uInfo.text = newList._address
         holder.msgPreview.text = newList._msg
 
     }
 
     override fun getItemCount(): Int {
-        return 0
+        return listDisc.size
     }
 }

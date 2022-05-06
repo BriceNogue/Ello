@@ -37,14 +37,15 @@ class MainActivity : AppCompatActivity() {
 
         //openSMSappChooser(this)
         checkAndRequestPermissions()
-        var rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
+        val rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
         rcvmain.layoutManager = LinearLayoutManager(this)
+
         displaySms()
 
-        var btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
+        val btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
 
         btnNewMsg.setOnClickListener(){
-            var intent = Intent(this, NewMessage::class.java)
+            val intent = Intent(this, NewMessage::class.java)
             startActivity(intent)
             enableRuntimePermission()
 
@@ -224,6 +225,7 @@ class MainActivity : AppCompatActivity() {
                     objSms._folderName = ("sent")
                 }
                 listSms!!.add(objSms)
+                //Toast.makeText(this, "${objSms._id}\n ${objSms._folderName}", Toast.LENGTH_SHORT).show()
                 c.moveToNext()
             }
         }
@@ -277,7 +279,9 @@ class MainActivity : AppCompatActivity() {
         rcvMain = findViewById(R.id.rcv_main)
         listSms = mutableListOf()
 
-       getAllSms()
+        //Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show()
+
+        getAllSms()
 
         mainAdapter = MainAdapter(
             this@MainActivity,

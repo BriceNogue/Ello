@@ -64,7 +64,6 @@
         android:layout_below="@+id/app_bar_top_main"
         tools:itemCount="5"
         tools:listitem="@layout/liste_de_discution">
-        <!-- Scrollable content -->
 
     </androidx.recyclerview.widget.RecyclerView>
 
