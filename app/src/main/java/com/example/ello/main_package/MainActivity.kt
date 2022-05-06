@@ -4,11 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ComponentName
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,8 +17,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
-import com.example.ello.SmsMainModel
 import com.example.ello.send_message.NewMessage
 
 
@@ -36,8 +35,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        openSMSappChooser(this)
+        //openSMSappChooser(this)
         checkAndRequestPermissions()
+        var rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
+        rcvmain.layoutManager = LinearLayoutManager(this)
+        displaySms()
 
         var btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
 
@@ -48,25 +50,25 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val myPackageName = packageName
             if (Sms.getDefaultSmsPackage(this) != myPackageName) {
                 val intent = Intent(Sms.Intents.ACTION_CHANGE_DEFAULT)
                 intent.putExtra(Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName)
                 startActivityForResult(intent, 1)
             } else {
-                val lst: List<SmsMainModel>? = getAllSms()
+                //val lst: List<MainModel>? = getAllSms()
             }
         } else {
-            val lst: List<SmsMainModel>? = getAllSms()
-        }
+            //val lst: List<MainModel>? = getAllSms()
+        }*/
 
     }
 
     override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
         super.onRequestPermissionsResult(RC, per, PResult)
         when (RC) {
-            RequestPermissionCode -> if (PResult.size > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+            RequestPermissionCode -> if (PResult.isNotEmpty() && PResult[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(
                     this@MainActivity,
                     "Permission Granted, Now your application can access message.",
@@ -150,17 +152,92 @@ class MainActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     val myPackageName = packageName
                     if (Sms.getDefaultSmsPackage(mActivity) == myPackageName) {
-                        val lst: List<SmsMainModel> = getAllSms()!!
+                        //val lst: List<MainModel> = getAllSms()!!
                     }
                 }
             }
         }
     }
 
+    lateinit var id : String
+    //lateinit var addres : String
+    //lateinit var msg : String
+    lateinit var date : String
+    lateinit var readS : String
+
+    /*var smsList: MutableList<MainModel>? = null
     @SuppressLint("Range")
-    fun getAllSms(): List<SmsMainModel>? {
-        val lstSms: MutableList<SmsMainModel> = ArrayList()
-        var objSms = SmsMainModel()
+    private fun getAllSms(){
+        val uriSms = Uri.parse("content://sms")
+        //smsList = mutableListOf()
+        val cursor = this.contentResolver
+            .query(
+                uriSms, arrayOf(
+                    "_id", "address", "date", "body",
+                    "type", "read"
+                ), "type", null,
+                "date" + " COLLATE LOCALIZED ASC"
+            )
+        if (cursor != null) {
+            cursor.moveToLast()
+            if (cursor.count > 0) {
+                do {
+                        var addres = cursor.getString(cursor.getColumnIndexOrThrow("address"))
+                        var msg = cursor.getString(cursor.getColumnIndexOrThrow("body"))
+                        smsList!!.add(MainModel("$addres", "$msg"))
+
+                } while (cursor.moveToPrevious())
+            }
+        }
+    }*/
+
+    var listSms: MutableList<MainModel>? = null
+    @SuppressLint("Range")
+    fun getAllSms(){
+        var objSms : MainModel
+        val uriSms = Uri.parse("content://sms")
+        //smsList = mutableListOf()
+        val c = this.contentResolver
+            .query(
+                uriSms, arrayOf(
+                    "_id", "address", "date", "body",
+                    "type", "read"
+                ), "type", null,
+                "date" + " COLLATE LOCALIZED ASC"
+            )
+        val totalSMS: Int = c!!.getCount()
+        if (c.moveToFirst()) {
+            for (i in 0 until totalSMS) {
+                objSms = MainModel()
+                objSms._id = (c.getString(c.getColumnIndexOrThrow("_id")))
+                objSms._address = (
+                    c.getString(
+                        c.getColumnIndexOrThrow("address")
+                    )
+                )
+                objSms._msg = (c.getString(c.getColumnIndexOrThrow("body")))
+                objSms._readState = (c.getString(c.getColumnIndex("read")))
+                objSms._time = (c.getString(c.getColumnIndexOrThrow("date")))
+                if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
+                    objSms._folderName = ("inbox")
+                } else {
+                    objSms._folderName = ("sent")
+                }
+                listSms!!.add(objSms)
+                c.moveToNext()
+            }
+        }
+        // else {
+        // throw new RuntimeException("You have no SMS");
+        // }
+        c.close()
+
+    }
+
+   /* var listSms: MutableList<MainModel>? = null
+    @SuppressLint("Range")
+    fun getAllSms(): List<MainModel>? {
+        var objSms : MainModel
         val message: Uri = Uri.parse("content://sms/")
         val cr: ContentResolver = mActivity.getContentResolver()
         val c: Cursor? = cr.query(message, null, null, null, null)
@@ -168,7 +245,7 @@ class MainActivity : AppCompatActivity() {
         val totalSMS: Int = c!!.getCount()
         if (c.moveToFirst()) {
             for (i in 0 until totalSMS) {
-                objSms = SmsMainModel()
+                objSms = MainModel()
                 objSms.setId(c.getString(c.getColumnIndexOrThrow("_id")))
                 objSms.setAddress(
                     c.getString(
@@ -183,7 +260,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     objSms.setFolderName("sent")
                 }
-                lstSms.add(objSms)
+                listSms!!.add(objSms)
                 c.moveToNext()
             }
         }
@@ -191,9 +268,23 @@ class MainActivity : AppCompatActivity() {
         // throw new RuntimeException("You have no SMS");
         // }
         c.close()
-        return lstSms
+        return listSms
+    }*/
+
+    lateinit var rcvMain : RecyclerView
+    lateinit var mainAdapter : MainAdapter
+    private fun displaySms(){
+        rcvMain = findViewById(R.id.rcv_main)
+        listSms = mutableListOf()
+
+       getAllSms()
+
+        mainAdapter = MainAdapter(
+            this@MainActivity,
+            listSms!!
+        )
+        rcvMain.adapter = mainAdapter
     }
-    
 
    /* override fun onResume() {
         super.onResume()

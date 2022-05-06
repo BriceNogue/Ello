@@ -14,13 +14,13 @@ import com.example.ello.select_contact.ContactAdapter
 import com.example.ello.select_contact.ContactModel
 import com.example.ello.send_message.InboxSms
 
-class MainAdapter (c: Context, var layout: Int, var cursor:Cursor?, var arrayOf: Array<String>, var intArrayOf: IntArray) :
+class MainAdapter (context: Context, var listDisc : MutableList<MainModel>) :
     RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         //val cPicture: ImageView = itemView.findViewById(R.id.contact_picture)
-        val uInfo = v.findViewById<TextView>(R.id.user_info)
-        val msgPreview = v.findViewById<TextView>(R.id.msg_preview)
+        var uInfo = v.findViewById<TextView>(R.id.user_info)
+        var msgPreview = v.findViewById<TextView>(R.id.msg_preview)
 
         /*init {
             v.setOnClickListener { v: View ->
@@ -34,15 +34,18 @@ class MainAdapter (c: Context, var layout: Int, var cursor:Cursor?, var arrayOf:
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.MainViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.contacts_list_model, parent, false)
+            .inflate(R.layout.liste_de_discution, parent, false)
 
         return MainViewHolder(view)
     }
+
     override fun onBindViewHolder(holder: MainAdapter.MainViewHolder, position: Int) {
-        val cu = cursor!!
+
+        var newList = listDisc[position]
+        holder.uInfo.text = newList._address
+        holder.msgPreview.text = newList._msg
 
     }
-
 
     override fun getItemCount(): Int {
         return 0
