@@ -23,14 +23,6 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainModel>) 
         var uInfo = v.findViewById<TextView>(R.id.user_info)
         var msgPreview = v.findViewById<TextView>(R.id.msg_preview)
 
-        /*init {
-            v.setOnClickListener { v: View ->
-                val position: Int = adapterPosition
-                val intent = Intent(v.context,InboxSms::class.java)
-                startActivity(v.context,intent,null)
-            }
-        }*/
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.MainViewHolder {
@@ -45,6 +37,12 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainModel>) 
         var newList = listDisc!![position]
         holder.uInfo.text = newList._address
         holder.msgPreview.text = newList._msg
+        holder.itemView.setOnClickListener{ v:View ->
+            val intent = Intent(v.context, InboxSms::class.java)
+            intent.putExtra("phon", listDisc!![position].getAddress())
+            //intent.putExtra("contact", listDisc!![position].getMsg())
+            ContextCompat.startActivity(v.context, intent, null)
+        }
 
     }
 

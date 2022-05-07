@@ -51,19 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val myPackageName = packageName
-            if (Sms.getDefaultSmsPackage(this) != myPackageName) {
-                val intent = Intent(Sms.Intents.ACTION_CHANGE_DEFAULT)
-                intent.putExtra(Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName)
-                startActivityForResult(intent, 1)
-            } else {
-                //val lst: List<MainModel>? = getAllSms()
-            }
-        } else {
-            //val lst: List<MainModel>? = getAllSms()
-        }*/
-
     }
 
     override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
@@ -145,53 +132,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private lateinit var mActivity : Activity
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    val myPackageName = packageName
-                    if (Sms.getDefaultSmsPackage(mActivity) == myPackageName) {
-                        //val lst: List<MainModel> = getAllSms()!!
-                    }
-                }
-            }
-        }
-    }
-
-    lateinit var id : String
-    //lateinit var addres : String
-    //lateinit var msg : String
-    lateinit var date : String
-    lateinit var readS : String
-
-    /*var smsList: MutableList<MainModel>? = null
-    @SuppressLint("Range")
-    private fun getAllSms(){
-        val uriSms = Uri.parse("content://sms")
-        //smsList = mutableListOf()
-        val cursor = this.contentResolver
-            .query(
-                uriSms, arrayOf(
-                    "_id", "address", "date", "body",
-                    "type", "read"
-                ), "type", null,
-                "date" + " COLLATE LOCALIZED ASC"
-            )
-        if (cursor != null) {
-            cursor.moveToLast()
-            if (cursor.count > 0) {
-                do {
-                        var addres = cursor.getString(cursor.getColumnIndexOrThrow("address"))
-                        var msg = cursor.getString(cursor.getColumnIndexOrThrow("body"))
-                        smsList!!.add(MainModel("$addres", "$msg"))
-
-                } while (cursor.moveToPrevious())
-            }
-        }
-    }*/
-
     var listSms: MutableList<MainModel>? = null
     @SuppressLint("Range")
     fun getAllSms(){
@@ -225,6 +165,7 @@ class MainActivity : AppCompatActivity() {
                     objSms._folderName = ("sent")
                 }
                 listSms!!.add(objSms)
+                listSms!!.reverse()
                 //Toast.makeText(this, "${objSms._id}\n ${objSms._folderName}", Toast.LENGTH_SHORT).show()
                 c.moveToNext()
             }
