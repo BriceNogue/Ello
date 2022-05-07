@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
+import com.example.ello.main_package.MainModel
+import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 
-class MessageAdapter(val context: Context) :
+class MessageAdapter(var context: Context, var listMsg : MutableList<MessageModel>) :
     RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
     companion object {
         const val VIEW_TYPE_MESSAGE_SENT = 1
@@ -18,25 +21,25 @@ class MessageAdapter(val context: Context) :
 
     open inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private var messageText = view.findViewById<TextView>(R.id.txtMyMessage)
+        private var myMessage = view.findViewById<TextView>(R.id.txtMyMessage)
         private var timeText = view.findViewById<TextView>(R.id.txtMyMessageTime)
         open fun bind(message: MessageModel) {
-            messageText.text = message.message
-            //timeText.text = fromMillisToTimeString(millis = message.time)
+            myMessage.text = message._msg
+            timeText.text = message._time
         }
     }
 
 
     open inner class OtherMessageViewHolder(view: View) : MessageViewHolder(view) {
-        private var messageText = view.findViewById<TextView>(R.id.txtOrtherMessage)
+        private var oMessageText = view.findViewById<TextView>(R.id.txtOrtherMessage)
         private var timeText = view.findViewById<TextView>(R.id.txtOrtherMessageTime)
         override fun bind(message: MessageModel) {
-            messageText.text = message.message
-           // timeText.text = fromMillisToTimeString(millis = message.time)
+            oMessageText.text =  message._msg
+            timeText.text = message._time
         }
     }
 
-    private val messages: ArrayList<MessageModel> = ArrayList()
+    //private val messages: ArrayList<MessageModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val view: View
@@ -53,14 +56,14 @@ class MessageAdapter(val context: Context) :
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        val message = messages.get(position)
-        holder.bind(message)
+        var newList = listMsg[position]
+        holder.bind(newList)
     }
 
     override fun getItemViewType(position: Int): Int {
-        val message = messages[position]
+        val message = listMsg[position]
 
-        return if (message.isSending) {
+        return if (message._folderName == "sent") {
             VIEW_TYPE_MESSAGE_SENT
         } else {
             VIEW_TYPE_MESSAGE_RECEIVED
@@ -68,7 +71,7 @@ class MessageAdapter(val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return listMsg.size
     }
 }
 

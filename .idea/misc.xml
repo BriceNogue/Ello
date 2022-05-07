@@ -31,9 +31,14 @@
         <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/app_bar_btn_top.xml" value="0.259375" />
         <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/app_bar_top_select_contact.xml" value="0.259375" />
         <entry key="..\:/Ecole/Android/Projets/Messagerie_inteligente/Ello/app/src/main/res/menu/top_app_bar.xml" value="0.259375" />
+        <entry key="app/src/main/res/drawable/my_message_style.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/other_message_style.xml" value="0.328" />
+        <entry key="app/src/main/res/layout/activity_inbox_sms.xml" value="0.2753623188405797" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/liste_de_discution.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/liste_de_discution.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/my_message.xml" value="0.75" />
         <entry key="app/src/main/res/layout/not_default_app.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/other_message.xml" value="0.33177083333333335" />
       </map>
     </option>
   </component>

@@ -1,10 +1,12 @@
 package com.example.ello.send_message
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.SmsManager
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.main_package.MainActivity
 import com.example.ello.R
+import com.example.ello.main_package.MainAdapter
+import com.example.ello.main_package.MainModel
 
 class InboxSms : AppCompatActivity() {
 
@@ -32,10 +36,6 @@ class InboxSms : AppCompatActivity() {
             finish()
         }
 
-
-        val rcv = findViewById<RecyclerView>(R.id.rcv_inbox)
-        rcv.layoutManager = LinearLayoutManager(this)
-
         val contactName = getIntent().getStringExtra("name")
         val contactPhone = getIntent().getStringExtra("contact")
         val phon = getIntent().getStringExtra("phon")
@@ -45,10 +45,15 @@ class InboxSms : AppCompatActivity() {
         val contactname = findViewById<TextView>(R.id.contact_name_inbox)
         val contactphone = findViewById<TextView>(R.id.contact_phone_inbox)
 
+        val rcv = findViewById<RecyclerView>(R.id.rcv_inbox)
+        rcv.layoutManager = LinearLayoutManager(this)
+
         if (phon.isNullOrEmpty()){
             contactname.setText(contactName)
+            displaySms(contactPhone!!)
         }else{
             phonn.setText(phon)
+            displaySms(phon!!)
         }
         contactphone.setText(contactPhone)
 
@@ -137,4 +142,69 @@ class InboxSms : AppCompatActivity() {
             ex.printStackTrace()
         }
     }
+
+    var listSms: MutableList<MessageModel>? = null
+    @SuppressLint("Range")
+    fun getAllSms(numb : String){
+        var objSms : MessageModel
+        val uriSms = Uri.parse("content://sms")
+        //smsList = mutableListOf()
+        val c = this.contentResolver
+            .query(
+                uriSms, arrayOf(
+                    "_id", "address", "date", "body",
+                    "type", "read"
+                ), "type", null,
+                "date" + " COLLATE LOCALIZED ASC"
+            )
+        val totalSMS: Int = c!!.getCount()
+        if (c.moveToFirst()) {
+            for (i in 0 until totalSMS) {
+                objSms = MessageModel()
+                objSms._id = (c.getString(c.getColumnIndexOrThrow("_id")))
+                objSms._address = (
+                        c.getString(
+                            c.getColumnIndexOrThrow("address")
+                        )
+                        )
+                objSms._msg = (c.getString(c.getColumnIndexOrThrow("body")))
+                objSms._readState = (c.getString(c.getColumnIndex("read")))
+                objSms._time = (c.getString(c.getColumnIndexOrThrow("date")))
+                if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
+                    objSms._folderName = ("inbox")
+                } else {
+                    objSms._folderName = ("sent")
+                }
+                if (objSms._address.equals(numb)){
+
+                    listSms!!.add(objSms)
+                }
+                //Toast.makeText(this, "${objSms._id}\n ${objSms._folderName}", Toast.LENGTH_SHORT).show()
+                c.moveToNext()
+            }
+        }
+        // else {
+        // throw new RuntimeException("You have no SMS");
+        // }
+        c.close()
+
+    }
+
+    lateinit var rcvIb : RecyclerView
+    lateinit var ibAdapter : MessageAdapter
+    private fun displaySms(numb: String){
+        rcvIb = findViewById(R.id.rcv_inbox)
+        listSms = mutableListOf()
+
+        //Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show()
+
+        getAllSms(numb)
+
+        ibAdapter = MessageAdapter(
+            this@InboxSms,
+            listSms!!
+        )
+        rcvIb.adapter = ibAdapter
+    }
+
 }

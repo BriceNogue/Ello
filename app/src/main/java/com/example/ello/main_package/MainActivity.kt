@@ -236,43 +236,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-   /* var listSms: MutableList<MainModel>? = null
-    @SuppressLint("Range")
-    fun getAllSms(): List<MainModel>? {
-        var objSms : MainModel
-        val message: Uri = Uri.parse("content://sms/")
-        val cr: ContentResolver = mActivity.getContentResolver()
-        val c: Cursor? = cr.query(message, null, null, null, null)
-        mActivity.startManagingCursor(c)
-        val totalSMS: Int = c!!.getCount()
-        if (c.moveToFirst()) {
-            for (i in 0 until totalSMS) {
-                objSms = MainModel()
-                objSms.setId(c.getString(c.getColumnIndexOrThrow("_id")))
-                objSms.setAddress(
-                    c.getString(
-                        c.getColumnIndexOrThrow("address")
-                    )
-                )
-                objSms.setMsg(c.getString(c.getColumnIndexOrThrow("body")))
-                objSms.setReadState(c.getString(c.getColumnIndex("read")))
-                objSms.setTime(c.getString(c.getColumnIndexOrThrow("date")))
-                if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
-                    objSms.setFolderName("inbox")
-                } else {
-                    objSms.setFolderName("sent")
-                }
-                listSms!!.add(objSms)
-                c.moveToNext()
-            }
-        }
-        // else {
-        // throw new RuntimeException("You have no SMS");
-        // }
-        c.close()
-        return listSms
-    }*/
-
     lateinit var rcvMain : RecyclerView
     lateinit var mainAdapter : MainAdapter
     private fun displaySms(){
