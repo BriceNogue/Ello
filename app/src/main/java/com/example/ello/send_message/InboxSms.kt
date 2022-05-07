@@ -48,6 +48,7 @@ class InboxSms : AppCompatActivity() {
         val rcv = findViewById<RecyclerView>(R.id.rcv_inbox)
         rcv.layoutManager = LinearLayoutManager(this)
 
+        var d = 0
         if (phon.isNullOrEmpty()){
             contactname.setText(contactName)
             displaySms(contactPhone!!)
