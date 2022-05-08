@@ -49,6 +49,7 @@ class InboxSms : AppCompatActivity() {
         var layoutManager1 = LinearLayoutManager(this)
         layoutManager1.setReverseLayout(true)
         rcv.layoutManager = layoutManager1
+        var i = 0
 
         if (phon.isNullOrEmpty()){
             contactname.setText(contactName)
