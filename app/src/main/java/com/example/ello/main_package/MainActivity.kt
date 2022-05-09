@@ -14,6 +14,7 @@ import android.provider.Telephony
 import android.provider.Telephony.Sms
 import android.view.Menu
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -43,16 +44,7 @@ class MainActivity : AppCompatActivity() {
         val rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
         rcvmain.layoutManager = LinearLayoutManager(this)
 
-        //displaySms()
-
-        getSmsConversation(this){ conversations ->
-            conversations!!.forEach { conversation ->
-                Toast.makeText(this, "${conversation.number}",Toast.LENGTH_SHORT).show()
-               // println("Number: ${conversation.number}")
-               // println("Message One: ${conversation.message[0].body}")
-               // println("Message Two: ${conversation.message[1].body}")
-            }
-        }
+        displaySms()
 
         val btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
 
@@ -149,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     //class Conversation(val number: String, val message: List<Message>)
     class Message(val number: String, val body: String, val date: Date)
 
-    fun getSmsConversation(context: Context, number: String? = null, completion: (conversations: List<MainConveration>?) -> Unit) {
+   /* fun getSmsConversation(context: Context, number: String? = null, completion: (conversations: List<MainConveration>?) -> Unit) {
         val cursor = context.contentResolver.query(Telephony.Sms.CONTENT_URI, null, null, null, null)
 
         val numbers = ArrayList<String>()
@@ -179,7 +171,92 @@ class MainActivity : AppCompatActivity() {
         }
 
         completion(results)
-    }
+    }*/
+
+
+
+
+     var listConv : MutableList<MainConveration>? = null
+     var listSms: MutableList<MainModel>? = null
+     lateinit var txtMsg : TextView
+     @SuppressLint("Range")
+     fun getAllSms(){
+
+         txtMsg = findViewById(R.id.txt_msg_count)
+         val numbers = ArrayList<String>()
+         val messages = ArrayList<Message>()
+         //var results = ArrayList<MainConveration>()
+
+         var objSms : MainModel
+         val uriSms = Uri.parse("content://sms")
+         //smsList = mutableListOf()
+         val c = this.contentResolver
+             .query(
+                 uriSms, arrayOf(
+                     "_id", "address", "date", "body",
+                     "type", "read"
+                 ), "type", null,
+                 "date" + " COLLATE LOCALIZED ASC"
+             )
+         val totalSMS: Int = c!!.count
+         if (c.moveToFirst()) {
+             for (i in 0 until totalSMS) {
+                 objSms = MainModel()
+                 objSms._id = (c.getString(c.getColumnIndexOrThrow("_id")))
+                 objSms._address = (
+                     c.getString(
+                         c.getColumnIndexOrThrow("address")
+                     )
+                 )
+                 objSms._msg = (c.getString(c.getColumnIndexOrThrow("body")))
+                 objSms._readState = (c.getString(c.getColumnIndex("read")))
+                 objSms._time = (c.getString(c.getColumnIndexOrThrow("date")))
+                 if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
+                     objSms._folderName = ("inbox")
+                 } else {
+                     objSms._folderName = ("sent")
+                 }
+                 numbers.add(objSms._address)
+                 listSms!!.add(objSms)
+                 listSms!!.reverse()
+                 c.moveToNext()
+
+             }
+
+         }
+         else {
+             throw RuntimeException("You have no SMS");
+         }
+         c.close()
+
+         var nbrMsg = 0
+         numbers.forEach { number ->
+             if (listConv!!.find { it.number == number } == null) {
+                 val msg = messages.filter { it.number == number }
+                 listConv!!.add(MainConveration(number = number, message = msg))
+                 //listConv!!.sortBy { it.number}
+             }
+             nbrMsg = listConv!!.size
+             txtMsg.text = "$nbrMsg conversations"
+         }
+     }
+
+     lateinit var rcvMain : RecyclerView
+     lateinit var mainAdapter : MainAdapter
+     private fun displaySms(){
+         rcvMain = findViewById(R.id.rcv_main)
+         listConv = mutableListOf()
+         listSms = mutableListOf()
+
+         getAllSms()
+
+         mainAdapter = MainAdapter(
+             this@MainActivity,
+             listConv!!
+         )
+         rcvMain.adapter = mainAdapter
+     }
+
 
 
 
@@ -248,6 +325,29 @@ class MainActivity : AppCompatActivity() {
         //Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show()
 
         getAllSms()
+
+        mainAdapter = MainAdapter(
+            this@MainActivity,
+            listSms!!
+        )
+        rcvMain.adapter = mainAdapter
+    }*/
+
+   /* lateinit var rcvMain : RecyclerView
+    lateinit var mainAdapter: MainAdapter
+    lateinit var listSms: MutableList<MainModel>
+    private fun displaySms(){
+        rcvMain = findViewById(R.id.rcv_main)
+        listSms = mutableListOf()
+
+        getSmsConversation(this){ conversations ->
+            conversations!!.forEach { conversation ->
+                Toast.makeText(this, "${conversation.number}",Toast.LENGTH_SHORT).show()
+                // println("Number: ${conversation.number}")
+                // println("Message One: ${conversation.message[0].body}")
+                // println("Message Two: ${conversation.message[1].body}")
+            }
+        }
 
         mainAdapter = MainAdapter(
             this@MainActivity,

@@ -60,16 +60,19 @@ class InboxSms : AppCompatActivity() {
         contactphone.setText(contactPhone)
 
         val btnSendInbox = findViewById<ImageButton>(R.id.btn_send_sms_inbox)
-        val msg = findViewById<EditText>(R.id.message_inbox).text.toString()
+        val msgI = findViewById<EditText>(R.id.message_inbox)
 
         btnSendInbox.setOnClickListener(){
+            var msg = msgI.text.toString()
             if (phon.isNullOrEmpty()){
 
                 sendSMS(contactPhone!!,msg)
+                msgI.text.clear()
 
             }else{
 
                 sendSMS(phon,msg)
+                msgI.text.clear()
 
             }
         }
@@ -207,6 +210,7 @@ class InboxSms : AppCompatActivity() {
             listSms!!
         )
         rcvIb.adapter = ibAdapter
+        ibAdapter.notifyDataSetChanged()
     }
 
 }

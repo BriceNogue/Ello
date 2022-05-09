@@ -14,7 +14,7 @@ import com.example.ello.select_contact.ContactAdapter
 import com.example.ello.select_contact.ContactModel
 import com.example.ello.send_message.InboxSms
 
-class MainAdapter (var context: Context, var listDisc : MutableList<MainModel>) :
+class MainAdapter (var context: Context, var listDisc : MutableList<MainConveration>) :
     RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -35,8 +35,8 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainModel>) 
     override fun onBindViewHolder(holder: MainAdapter.MainViewHolder, position: Int) {
 
         var newList = listDisc!![position]
-        holder.uInfo.text = newList._address
-        holder.msgPreview.text = newList._msg
+        holder.uInfo.text = newList.number
+        //holder.msgPreview.text = newList.message[0].body
         holder.itemView.setOnClickListener{ v:View ->
             val intent = Intent(v.context, InboxSms::class.java)
             intent.putExtra("phon", listDisc!![position].getAddress())
