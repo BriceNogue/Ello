@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
 import android.provider.Telephony.Sms
 import android.view.Menu
 import android.widget.ImageButton
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
 import com.example.ello.send_message.NewMessage
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +43,16 @@ class MainActivity : AppCompatActivity() {
         val rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
         rcvmain.layoutManager = LinearLayoutManager(this)
 
-        displaySms()
+        //displaySms()
+
+        getSmsConversation(this){ conversations ->
+            conversations!!.forEach { conversation ->
+                Toast.makeText(this, "${conversation.number}",Toast.LENGTH_SHORT).show()
+               // println("Number: ${conversation.number}")
+               // println("Message One: ${conversation.message[0].body}")
+               // println("Message Two: ${conversation.message[1].body}")
+            }
+        }
 
         val btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
 
@@ -132,7 +144,46 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    var listConv : MutableList<MainConveration>? = null
+
+
+    //class Conversation(val number: String, val message: List<Message>)
+    class Message(val number: String, val body: String, val date: Date)
+
+    fun getSmsConversation(context: Context, number: String? = null, completion: (conversations: List<MainConveration>?) -> Unit) {
+        val cursor = context.contentResolver.query(Telephony.Sms.CONTENT_URI, null, null, null, null)
+
+        val numbers = ArrayList<String>()
+        val messages = ArrayList<Message>()
+        var results = ArrayList<MainConveration>()
+
+        while (cursor != null && cursor.moveToNext()) {
+            val smsDate = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.DATE))
+            val number = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS))
+            val body = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY))
+
+            numbers.add(number)
+            messages.add(Message(number, body, Date(smsDate.toLong())))
+        }
+
+        cursor?.close()
+
+        numbers.forEach { number ->
+            if (results.find { it.number == number } == null) {
+                val msg = messages.filter { it.number == number }
+                results.add(MainConveration(number = number, message = msg))
+            }
+        }
+
+        if (number != null) {
+            results = results.filter { it.number == number } as ArrayList<MainConveration>
+        }
+
+        completion(results)
+    }
+
+
+
+   /* var listConv : MutableList<MainConveration>? = null
     var listSms: MutableList<MainModel>? = null
     @SuppressLint("Range")
     fun getAllSms(){
@@ -203,7 +254,7 @@ class MainActivity : AppCompatActivity() {
             listSms!!
         )
         rcvMain.adapter = mainAdapter
-    }
+    }*/
 
    /* override fun onResume() {
         super.onResume()
