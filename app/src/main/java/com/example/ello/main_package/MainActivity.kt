@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    var listConv : MutableList<MainConveration>? = null
     var listSms: MutableList<MainModel>? = null
     @SuppressLint("Range")
     fun getAllSms(){
@@ -146,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                 ), "type", null,
                 "date" + " COLLATE LOCALIZED ASC"
             )
-        val totalSMS: Int = c!!.getCount()
+        val totalSMS: Int = c!!.count
         if (c.moveToFirst()) {
             for (i in 0 until totalSMS) {
                 objSms = MainModel()
@@ -166,15 +167,25 @@ class MainActivity : AppCompatActivity() {
                 }
                 listSms!!.add(objSms)
                 listSms!!.reverse()
-                //Toast.makeText(this, "${objSms._id}\n ${objSms._folderName}", Toast.LENGTH_SHORT).show()
                 c.moveToNext()
             }
         }
-        // else {
-        // throw new RuntimeException("You have no SMS");
-        // }
+        else {
+            throw RuntimeException("You have no SMS");
+        }
         c.close()
 
+        var j = 0
+        for (i in listSms!!){
+            var temp: MainModel
+            temp = listSms!![j]
+            if (listSms!![j]._address.equals(temp._address)){
+
+                Toast.makeText(this, "${listSms!![j]._address}", Toast.LENGTH_SHORT).show()
+
+            }
+            j += 1
+        }
     }
 
     lateinit var rcvMain : RecyclerView

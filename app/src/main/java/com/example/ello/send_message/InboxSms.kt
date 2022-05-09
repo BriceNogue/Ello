@@ -49,7 +49,6 @@ class InboxSms : AppCompatActivity() {
         var layoutManager1 = LinearLayoutManager(this)
         layoutManager1.setReverseLayout(true)
         rcv.layoutManager = layoutManager1
-        var i = 0
 
         if (phon.isNullOrEmpty()){
             contactname.setText(contactName)
@@ -161,7 +160,7 @@ class InboxSms : AppCompatActivity() {
                 "date" + " COLLATE LOCALIZED ASC"
             )
         val totalSMS: Int = c!!.getCount()
-        if (c.moveToFirst()) {
+        if (c.moveToLast()) {
             for (i in 0 until totalSMS) {
                 objSms = MessageModel()
                 objSms._id = (c.getString(c.getColumnIndexOrThrow("_id")))
@@ -183,7 +182,7 @@ class InboxSms : AppCompatActivity() {
                     listSms!!.add(objSms)
                 }
                 //Toast.makeText(this, "${objSms._id}\n ${objSms._folderName}", Toast.LENGTH_SHORT).show()
-                c.moveToNext()
+                c.moveToPrevious()
             }
         }
         // else {
