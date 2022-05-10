@@ -11,7 +11,7 @@
         android:id="@+id/app_bar_top_inbox"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="@color/white">
+        android:background="@color/blue_projet">
 
         <ImageButton
             android:id="@+id/btn_back_inbox"

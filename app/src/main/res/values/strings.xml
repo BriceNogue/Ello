@@ -7,4 +7,6 @@
     <string name="content_description_favorite"> </string>
     <string name="more">User</string>
     <string name="content_description_more"> </string>
+    <string name="page_title">ello</string>
+    <string name="new_msg_page_title">New message</string>
 </resources>

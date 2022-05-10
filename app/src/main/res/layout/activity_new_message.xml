@@ -10,10 +10,10 @@
         android:id="@+id/app_bar_top_new_msg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white">
+        android:background="@color/blue_projet">
 
         <ImageButton
-            android:id="@+id/btn_bar_new_msg"
+            android:id="@+id/btn_back_new_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
@@ -21,25 +21,33 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="19dp"/>
 
+        <TextView
+            android:layout_toEndOf="@+id/btn_back_new_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New message"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:textSize="15dp"/>
+
         <ImageButton
             android:id="@+id/btn_search_new_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic__search_24"
-            android:layout_toStartOf="@+id/btn_more_new_msg"
+            android:src="@drawable/ic_search_white"
             android:background="@drawable/btn_new_msg_style"
             android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btn_"
             android:layout_marginLeft="19dp"/>
 
-
         <ImageButton
-            android:id="@+id/btn_more_new_msg"
-            android:layout_width="50dp"
+            android:id="@+id/btn_"
+            android:layout_width="13dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:background="@drawable/btn_new_msg_style"
-            android:src="@drawable/ic_more_24" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
 
     </RelativeLayout>
 

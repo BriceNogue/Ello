@@ -9,22 +9,23 @@
     <RelativeLayout
         android:id="@+id/app_bar_top_select_cont"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/blue_projet">
 
         <ImageButton
-            android:id="@+id/btn_bar_select_cont"
+            android:id="@+id/btn_back_select_cont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
-            android:background="@drawable/btn_new_msg_style"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="19dp"/>
+            android:layout_marginLeft="19dp"
+            android:background="@drawable/btn_new_msg_style"
+            android:src="@drawable/ic_back" />
 
         <ImageButton
             android:id="@+id/btn_search_select_cont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic__search_24"
+            android:src="@drawable/ic_search_white"
             android:layout_toStartOf="@+id/btn_more_select_cont"
             android:background="@drawable/btn_new_msg_style"
             android:layout_centerVertical="true"
@@ -33,7 +34,7 @@
 
         <ImageButton
             android:id="@+id/btn_more_select_cont"
-            android:layout_width="50dp"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
@@ -43,12 +44,12 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_select_contact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/contacts_list_model"
-        android:id="@+id/rcv_select_contact"
+        android:layout_below="@+id/app_bar_top_select_cont"
         tools:itemCount="9"
-        android:layout_below="@+id/app_bar_top_select_cont"/>
+        tools:listitem="@layout/contacts_list_model" />
 
     <ImageButton
         android:id="@+id/fbtn_valide_select_contact"

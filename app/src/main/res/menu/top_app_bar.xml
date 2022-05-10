@@ -3,24 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search_contact"
-        android:icon="@drawable/ic__search_24"
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white"
         android:title="@string/search"
         android:contentDescription="@string/content_description_search"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/more"
-        android:icon="@android:drawable/ic_dialog_info"
-        android:title=" "
+        android:title="@string/more"
         android:contentDescription="@string/content_description_more"
-        app:showAsAction="never">
-
-        <menu>
-            <item android:id="@+id/connect"
-                android:title=" "/>
-        </menu>
-
-    </item>
+        app:showAsAction="never" />
 
 </menu>

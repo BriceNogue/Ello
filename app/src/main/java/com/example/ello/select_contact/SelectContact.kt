@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
+import com.example.ello.main_package.MainActivity
 import com.example.ello.send_message.NewMessage
 import java.util.*
 
@@ -34,14 +35,20 @@ class SelectContact : AppCompatActivity() {
 
     }*/
 
+    override fun onBackPressed(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_contact)
 
 
-        val btnReturn = findViewById<ImageButton>(R.id.btn_bar_select_cont)
+        val btnReturn = findViewById<ImageButton>(R.id.btn_back_select_cont)
         btnReturn.setOnClickListener(){
-            val intent = Intent(this, NewMessage::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

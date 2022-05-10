@@ -7,12 +7,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.view.Menu
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ello.main_package.MainActivity
 import com.example.ello.R
+import com.example.ello.main_package.MainActivity
 import com.example.ello.select_contact.SelectContact
 
 class NewMessage : AppCompatActivity() {
@@ -22,21 +23,27 @@ class NewMessage : AppCompatActivity() {
     lateinit var context: Context
     val smsManager = SmsManager.getDefault()
 
+   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.new_msg_app_bar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
 
-        val btnReturn = findViewById<ImageButton>(R.id.btn_bar_new_msg)
+        val btnReturn = findViewById<ImageButton>(R.id.btn_back_new_msg)
         btnReturn.setOnClickListener() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         btnAddRec = findViewById(R.id.add_recever)
         btnAddRec.setOnClickListener() {
             val intent = Intent(this, SelectContact::class.java)
             startActivity(intent)
-            //finish()*************************************************************************************************************************************************/
+            finish()
         }
 
         /******************************************************* Appel de la fonction d'envoi de sms simple *************************************************/
@@ -68,6 +75,12 @@ class NewMessage : AppCompatActivity() {
 
             }
         }
+    }
+
+    override fun onBackPressed(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     /***************************************************** Fonction d'envoi de sms simple *************************************************************

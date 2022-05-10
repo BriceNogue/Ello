@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
 import com.example.ello.select_contact.ContactAdapter
 import com.example.ello.select_contact.ContactModel
 import com.example.ello.send_message.InboxSms
+import java.lang.Exception
 
-class MainAdapter (var context: Context, var listDisc : MutableList<MainConveration>) :
+class MainAdapter (var context: Context, var listDisc : MutableList<MainConveration>, var listMsg : MutableList<MainModel>, var listCon : MutableList<ContactModel>) :
     RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -34,9 +36,39 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainConverat
 
     override fun onBindViewHolder(holder: MainAdapter.MainViewHolder, position: Int) {
 
+        //listDisc.sortByDescending { it.date }
         var newList = listDisc!![position]
-        holder.uInfo.text = newList.number
-        //holder.msgPreview.text = newList.message[0].body
+        //var newList1 = listMsg!![position]
+
+        var lstMsg: MutableList<String>
+        try {
+
+            for (nbr in listCon){
+                if (newList.number == nbr.contact_number){
+                    holder.uInfo.text = nbr.contact_name
+                    //Toast.makeText(context, "If...1...", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                     //holder.uInfo.text = newList.number
+                    //Toast.makeText(context, "Else...", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            lstMsg = mutableListOf()
+
+            for (msg in listMsg){
+                if (newList.number == msg._address){
+                    lstMsg.add(msg._msg)
+                    newList.date = msg._time
+                    holder.msgPreview.text = lstMsg[0]
+                    //Toast.makeText(context, "${newList.date}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }catch (Ex: Exception){
+            Toast.makeText(context, "${Ex.message}", Toast.LENGTH_SHORT).show()
+        }
+
         holder.itemView.setOnClickListener{ v:View ->
             val intent = Intent(v.context, InboxSms::class.java)
             intent.putExtra("phon", listDisc!![position].getAddress())
