@@ -39,12 +39,13 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainConverat
         //listDisc.sortByDescending { it.date }
         var newList = listDisc!![position]
         //var newList1 = listMsg!![position]
+        holder.uInfo.text = newList.number
 
         var lstMsg: MutableList<String>
         try {
 
             for (nbr in listCon){
-                if (newList.number == nbr.contact_number){
+                if (newList.number.equals(nbr.contact_number)){
                     holder.uInfo.text = nbr.contact_name
                     //Toast.makeText(context, "If...1...", Toast.LENGTH_SHORT).show()
                 }

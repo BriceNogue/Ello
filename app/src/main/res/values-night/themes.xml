@@ -1,14 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Ello" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Ello" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_projet</item>
-        <item name="colorPrimaryVariant">@color/blue_projet2</item>
+        <item name="colorPrimary">#1A1919</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_projet</item>
-        <item name="colorSecondaryVariant">@color/blue_projet</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">#262627</item>
+        <item name="colorSecondaryVariant">#000000</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
 

@@ -10,7 +10,9 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.view.Menu
+import android.provider.Telephony
+import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -20,13 +22,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
-import com.example.ello.select_contact.ContactAdapter
 import com.example.ello.select_contact.ContactModel
+import com.example.ello.select_contact.SelectContact
 import com.example.ello.send_message.NewMessage
 import com.google.android.material.appbar.MaterialToolbar
-import java.lang.Exception
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,9 +37,20 @@ class MainActivity : AppCompatActivity() {
 
      }*/
 
+    var cursor: Cursor? = null
+    var name: String? = null
+    private var phonenumber: String? = null
+    var listContact: MutableList<ContactModel>? = null
+    lateinit var rcvMain: RecyclerView
+    lateinit var mainAdapter: MainAdapter
+    var listConv: MutableList<MainConveration>? = null
+    var listSms: MutableList<MainModel>? = null
+    lateinit var txtMsg: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         /***************************** AppBarTop ************************/
 
         val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBar)
@@ -63,25 +74,32 @@ class MainActivity : AppCompatActivity() {
 
         /**********************************************************************/
 
+       // onResum()
+
         //openSMSappChooser(this)
-        checkAndRequestPermissions()
+       // checkAndRequestPermissions()
         val rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
         rcvmain.layoutManager = LinearLayoutManager(this)
 
-        displaySms()
+        try {
+
+            displaySms()
+
+        } catch (Ex: Exception) {
+            Toast.makeText(this, "Authorize Ello to access your message", Toast.LENGTH_LONG).show()
+        }
 
         val btnNewMsg = findViewById<ImageButton>(R.id.btn_create_new_disc)
 
         btnNewMsg.setOnClickListener() {
             val intent = Intent(this, NewMessage::class.java)
             startActivity(intent)
-            enableRuntimePermission()
             finish()
         }
 
     }
 
-    override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
+    /*override fun onRequestPermissionsResult(RC: Int, per: Array<String>, PResult: IntArray) {
         super.onRequestPermissionsResult(RC, per, PResult)
         when (RC) {
             RequestPermissionCode -> if (PResult.isNotEmpty() && PResult[0] == PackageManager.PERMISSION_GRANTED) {
@@ -98,38 +116,34 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
-    }
+    }*/
 
-    fun enableRuntimePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                this@MainActivity,
-                Manifest.permission.SEND_SMS
-            )
-        ) {
-            Toast.makeText(
-                this@MainActivity,
-                "SMS permission allows us to Access SMS app",
-                Toast.LENGTH_LONG
-            ).show()
-        } else {
-            ActivityCompat.requestPermissions(
-                this@MainActivity, arrayOf(
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.READ_SMS,
-                    Manifest.permission.RECEIVE_SMS,
-                    Manifest.permission.BROADCAST_SMS,
-                    Manifest.permission.RECEIVE_MMS
-                ), RequestPermissionCode
-            )
-        }
-    }
+    /* private fun enableRuntimePermission() {
+         if (ActivityCompat.shouldShowRequestPermissionRationale(
+                 this@MainActivity,
+                 arrayOf( Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS).toString()
+             )
+         ) {
+             Toast.makeText(
+                 this@MainActivity,
+                 "CONTACTS and SMS permission allows",
+                 Toast.LENGTH_LONG
+             ).show()
+         } else {
+             ActivityCompat.requestPermissions(
+                 this@MainActivity, arrayOf(
+                     Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS
+                 ), SelectContact.RequestPermissionCode
+             )
+         }
+     }*/
 
     companion object {
         const val RequestPermissionCode = 1
     }
 
     fun openSMSappChooser(context: Context) {
-        val packageManager: PackageManager = context.getPackageManager()
+        val packageManager = context.packageManager
         val componentName = ComponentName(context, MainActivity::class.java)
         packageManager.setComponentEnabledSetting(
             componentName,
@@ -159,7 +173,6 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
 
     //class Conversation(val number: String, val message: List<Message>)
     class Message(val number: String, val body: String, val date: Date)
@@ -195,10 +208,6 @@ class MainActivity : AppCompatActivity() {
 
          completion(results)
      }*/
-
-    var listConv: MutableList<MainConveration>? = null
-    var listSms: MutableList<MainModel>? = null
-    lateinit var txtMsg: TextView
 
     @SuppressLint("Range")
     fun getAllSms() {
@@ -262,10 +271,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var cursor: Cursor? = null
-    var name: String? = null
-    private var phonenumber: String? = null
-    var listContact: MutableList<ContactModel>? = null
     private fun getContactsIntoMutableList() {
         cursor = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -286,8 +291,6 @@ class MainActivity : AppCompatActivity() {
         cursor!!.close()
     }
 
-    lateinit var rcvMain: RecyclerView
-    lateinit var mainAdapter: MainAdapter
     private fun displaySms() {
         rcvMain = findViewById(R.id.rcv_main)
         listConv = mutableListOf()
@@ -305,8 +308,8 @@ class MainActivity : AppCompatActivity() {
             listContact!!
         )
         rcvMain.adapter = mainAdapter
+        mainAdapter.notifyDataSetChanged()
     }
-
 
     /* var listConv : MutableList<MainConveration>? = null
      var listSms: MutableList<MainModel>? = null
@@ -404,7 +407,7 @@ class MainActivity : AppCompatActivity() {
          rcvMain.adapter = mainAdapter
      }*/
 
-    /* override fun onResume() {
+    /*override fun onResume() {
          super.onResume()
          val myPackageName = packageName
          if (Telephony.Sms.getDefaultSmsPackage(this) != myPackageName) {
@@ -422,7 +425,9 @@ class MainActivity : AppCompatActivity() {
                      myPackageName
                  )
                  startActivity(intent)
+                 viewGroup.visibility = View.GONE
              })
+
          } else {
              // App is the default.
              // Hide the "not currently set as the default SMS app" interface
@@ -430,5 +435,6 @@ class MainActivity : AppCompatActivity() {
              viewGroup.visibility = View.GONE
          }
      }*/
+
 
 }

@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
 import com.example.ello.main_package.MainModel
+import com.example.ello.select_contact.ContactModel
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
-class MessageAdapter(var context: Context, var listMsg : MutableList<MessageModel>) :
+class MessageAdapter(var context: Context, var listMsg : MutableList<MessageModel>, var listCon : MutableList<ContactModel>) :
     RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
     companion object {
         const val VIEW_TYPE_MESSAGE_SENT = 1

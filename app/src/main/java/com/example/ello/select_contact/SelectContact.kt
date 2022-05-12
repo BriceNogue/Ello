@@ -6,45 +6,36 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.view.Menu
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
+import com.example.ello.databinding.ActivityMainBinding
 import com.example.ello.main_package.MainActivity
-import com.example.ello.send_message.NewMessage
 import java.util.*
+
 
 class SelectContact : AppCompatActivity() {
 
     private var cursor: Cursor? = null
     var name: String? = null
     private var phonenumber: String? = null
-
     lateinit var rcvSelectContact: RecyclerView
     var listContact: MutableList<ContactModel>? = null
-
     private lateinit var contactAdapter : ContactAdapter
-
-
-   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.app_bar_btn_top, menu)
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_app_bar, menu)
         return super.onCreateOptionsMenu(menu)
 
     }*/
 
-    override fun onBackPressed(){
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+    lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_contact)
-
 
         val btnReturn = findViewById<ImageButton>(R.id.btn_back_select_cont)
         btnReturn.setOnClickListener(){
@@ -56,10 +47,24 @@ class SelectContact : AppCompatActivity() {
         val recyclerview = findViewById<RecyclerView>(R.id.rcv_select_contact)
         recyclerview.layoutManager = LinearLayoutManager(this)
 
-        enableRuntimePermission()
-        getContact()
+        //enableRuntimePermission()
 
 
+
+        try {
+            getContact()
+
+        } catch (Ex: Exception) {
+            Toast.makeText(this, "Authorize Ello to access your contacts", Toast.LENGTH_LONG).show()
+        }
+
+
+    }
+
+    override fun onBackPressed(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
    /* private fun getContacts() {
@@ -129,8 +134,8 @@ class SelectContact : AppCompatActivity() {
             listContact!!
         )
         rcvSelectContact!!.adapter = contactAdapter
+        contactAdapter.notifyDataSetChanged()
     }
-
 
     private fun getContactsIntoMutableList(){
         cursor = contentResolver.query(
@@ -171,7 +176,7 @@ class SelectContact : AppCompatActivity() {
         }
     }
 
-    private fun enableRuntimePermission() {
+   /* private fun enableRuntimePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this@SelectContact,
                 Manifest.permission.READ_CONTACTS
@@ -189,10 +194,11 @@ class SelectContact : AppCompatActivity() {
                 ), RequestPermissionCode
             )
         }
-    }
+    }*/
 
     companion object {
         const val RequestPermissionCode = 1
     }
+
 
 }

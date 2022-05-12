@@ -15,29 +15,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ello">
-
+        <activity
+            android:name=".DefaultApp"
+            android:exported="false" />
         <!-- BroadcastReceiver that listens for incoming SMS messages -->
-        <receiver android:name=".SmsReceiver"
-            android:permission="android.permission.BROADCAST_SMS"
-            android:exported="false">
+        <receiver
+            android:name=".SmsReceiver"
+            android:exported="false"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
-        </receiver>
-        <!-- BroadcastReceiver that listens for incoming MMS messages -->
-        <receiver android:name=".MmsReceiver"
-            android:permission="android.permission.BROADCAST_WAP_PUSH"
-            android:exported="false">
+        </receiver> <!-- BroadcastReceiver that listens for incoming MMS messages -->
+        <receiver
+            android:name=".MmsReceiver"
+            android:exported="false"
+            android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
-        </receiver>
-
-        <!-- Service that delivers messages from the phone "quick response" -->
-        <service android:name=".HeadlessSmsSendService"
-            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
-            android:exported="true">
+        </receiver> <!-- Service that delivers messages from the phone "quick response" -->
+        <service
+            android:name=".HeadlessSmsSendService"
+            android:exported="true"
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>
                 <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
 
@@ -52,7 +55,21 @@
 
         <activity
             android:name=".send_message.InboxSms"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.APP_MESSAGING" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main_package.MainActivity" />
@@ -73,8 +90,15 @@
         </activity>
         <activity
             android:name=".main_package.MainActivity"
-            android:exported="true" >
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.APP_MESSAGING" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEND" />
@@ -89,8 +113,9 @@
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
             </intent-filter>
-        </activity>
+            -->
 
+        </activity>
         <activity
             android:name=".Login"
             android:exported="true">

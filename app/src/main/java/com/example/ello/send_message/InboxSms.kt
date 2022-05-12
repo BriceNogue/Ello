@@ -6,9 +6,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.telephony.SmsManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +19,14 @@ import com.example.ello.main_package.MainActivity
 import com.example.ello.R
 import com.example.ello.main_package.MainAdapter
 import com.example.ello.main_package.MainModel
+import com.example.ello.select_contact.ContactModel
 
 class InboxSms : AppCompatActivity() {
 
+    var cursor: Cursor? = null
+    var name: String? = null
+    private var phonenumber: String? = null
+    var listContact: MutableList<ContactModel>? = null
     lateinit var btnSend: ImageButton
     lateinit var context: Context
     val smsManager = SmsManager.getDefault()
@@ -56,6 +63,11 @@ class InboxSms : AppCompatActivity() {
         }else{
             phonn.setText(phon)
             displaySms(phon!!)
+            for (cont in listContact!!){
+                if (cont.contact_number.equals(phon)){
+                    phonn.setText(cont.contact_name)
+                }
+            }
         }
         contactphone.setText(contactPhone)
 
@@ -195,19 +207,41 @@ class InboxSms : AppCompatActivity() {
 
     }
 
+    private fun getContactsIntoMutableList() {
+        cursor = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )
+        while (cursor!!.moveToNext()) {
+            name =
+                cursor!!.getString(cursor!!.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            phonenumber =
+                cursor!!.getString(cursor!!.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+            listContact!!.add(ContactModel("$name", "$phonenumber"))
+            listContact!!.sortByDescending { it.contact_name }
+            listContact!!.reverse()
+        }
+        cursor!!.close()
+    }
+
     lateinit var rcvIb : RecyclerView
     lateinit var ibAdapter : MessageAdapter
     private fun displaySms(numb: String){
         rcvIb = findViewById(R.id.rcv_inbox)
         listSms = mutableListOf()
+        listContact = mutableListOf()
 
         //Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show()
-
+        getContactsIntoMutableList()
         getAllSms(numb)
 
         ibAdapter = MessageAdapter(
             this@InboxSms,
-            listSms!!
+            listSms!!,
+            listContact!!
         )
         rcvIb.adapter = ibAdapter
         ibAdapter.notifyDataSetChanged()

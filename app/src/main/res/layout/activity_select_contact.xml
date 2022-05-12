@@ -21,11 +21,10 @@
             android:background="@drawable/btn_new_msg_style"
             android:src="@drawable/ic_back" />
 
-        <ImageButton
-            android:id="@+id/btn_search_select_cont"
+        <SearchView
+            android:id="@+id/search_view_select_cont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_white"
             android:layout_toStartOf="@+id/btn_more_select_cont"
             android:background="@drawable/btn_new_msg_style"
             android:layout_centerVertical="true"

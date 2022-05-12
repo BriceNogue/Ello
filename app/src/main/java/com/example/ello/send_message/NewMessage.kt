@@ -24,7 +24,7 @@ class NewMessage : AppCompatActivity() {
     val smsManager = SmsManager.getDefault()
 
    /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.new_msg_app_bar, menu)
+        menuInflater.inflate(R.menu.top_app_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }*/
 

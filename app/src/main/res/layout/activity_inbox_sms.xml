@@ -10,8 +10,8 @@
     <RelativeLayout
         android:id="@+id/app_bar_top_inbox"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/blue_projet">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
 
         <ImageButton
             android:id="@+id/btn_back_inbox"
@@ -32,7 +32,7 @@
             android:background="@drawable/btn_new_msg_style"
             android:src="@drawable/ic_more_24" />
 
-        <androidx.cardview.widget.CardView
+        <!--<androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -46,24 +46,23 @@
                 android:layout_height="50dp"
                 android:src="@drawable/ic_person" />
 
-        </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>-->
 
         <TextView
             android:id="@+id/contact_name_inbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:text="ContactName"
-            android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="15dp"
             android:textStyle="normal" />
 
         <TextView
             android:id="@+id/contact_phone_inbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card"
             android:layout_toEndOf="@+id/contact_name_inbox"
             android:text="ContactPhone"
             android:textColor="@color/black"

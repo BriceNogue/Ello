@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:textSize="15dp"/>
 
-        <ImageButton
+        <SearchView
             android:id="@+id/btn_search_new_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

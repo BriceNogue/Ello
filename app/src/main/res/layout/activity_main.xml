@@ -103,8 +103,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/app_bar_top_main"
-            tools:itemCount="5"
-            tools:listitem="@layout/liste_de_discution">
+            tools:itemCount="9"
+            tools:listitem="@layout/liste_de_discution"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -135,6 +137,7 @@
             android:textColor="@color/gris_projet" />
 
     </RelativeLayout>
+
     <!--<LinearLayout
         android:id="@+id/not_default_app"
         android:layout_width="match_parent"
@@ -142,13 +145,21 @@
         android:orientation="horizontal"
         android:background="@color/white">
 
-        <Button
-            android:id="@+id/change_default_app"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/blue_projet"
-            android:text="Change default app"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/change_default_app"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/blue_projet"
+                android:text="Change default app"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
     </LinearLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
