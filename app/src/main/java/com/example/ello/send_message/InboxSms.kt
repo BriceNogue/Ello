@@ -1,11 +1,13 @@
 package com.example.ello.send_message
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,8 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.telephony.SmsManager
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.main_package.MainActivity
@@ -23,6 +27,8 @@ import com.example.ello.select_contact.ContactModel
 
 class InboxSms : AppCompatActivity() {
 
+    lateinit var rcvIb : RecyclerView
+    private lateinit var ibAdapter : MessageAdapter
     var cursor: Cursor? = null
     var name: String? = null
     private var phonenumber: String? = null
@@ -34,6 +40,7 @@ class InboxSms : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inbox_sms)
+        checkAndRequestPermissions()
 
         val btnBack = findViewById<ImageButton>(R.id.btn_back_inbox)
 
@@ -95,6 +102,19 @@ class InboxSms : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun checkAndRequestPermissions(): Boolean {
+        val sms = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+        if (sms != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_SMS),
+                MainActivity.RequestPermissionCode
+            )
+            return false
+        }
+        return true
     }
 
     private fun sendSMS(phoneNumber: String, message: String) {
@@ -225,10 +245,9 @@ class InboxSms : AppCompatActivity() {
             listContact!!.reverse()
         }
         cursor!!.close()
+        //ibAdapter.notifyDataSetChanged()
     }
 
-    lateinit var rcvIb : RecyclerView
-    lateinit var ibAdapter : MessageAdapter
     private fun displaySms(numb: String){
         rcvIb = findViewById(R.id.rcv_inbox)
         listSms = mutableListOf()

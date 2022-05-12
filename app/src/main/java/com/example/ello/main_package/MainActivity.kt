@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
        // onResum()
 
         //openSMSappChooser(this)
-       // checkAndRequestPermissions()
+        checkAndRequestPermissions()
         val rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
         rcvmain.layoutManager = LinearLayoutManager(this)
 
@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         btnNewMsg.setOnClickListener() {
             val intent = Intent(this, NewMessage::class.java)
             startActivity(intent)
+            enableRuntimePermission()
             finish()
         }
 
@@ -118,10 +119,10 @@ class MainActivity : AppCompatActivity() {
         }
     }*/
 
-    /* private fun enableRuntimePermission() {
+     private fun enableRuntimePermission() {
          if (ActivityCompat.shouldShowRequestPermissionRationale(
                  this@MainActivity,
-                 arrayOf( Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS).toString()
+                 Manifest.permission.SEND_SMS
              )
          ) {
              Toast.makeText(
@@ -132,11 +133,11 @@ class MainActivity : AppCompatActivity() {
          } else {
              ActivityCompat.requestPermissions(
                  this@MainActivity, arrayOf(
-                     Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS
+                     Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS
                  ), SelectContact.RequestPermissionCode
              )
          }
-     }*/
+     }
 
     companion object {
         const val RequestPermissionCode = 1

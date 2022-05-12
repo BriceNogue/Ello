@@ -24,6 +24,7 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainConverat
         //val cPicture: ImageView = itemView.findViewById(R.id.contact_picture)
         var uInfo = v.findViewById<TextView>(R.id.user_info)
         var msgPreview = v.findViewById<TextView>(R.id.msg_preview)
+        var time = v.findViewById<TextView>(R.id.txt_time_main)
 
     }
 
@@ -62,6 +63,8 @@ class MainAdapter (var context: Context, var listDisc : MutableList<MainConverat
                     lstMsg.add(msg._msg)
                     newList.date = msg._time
                     holder.msgPreview.text = lstMsg[0]
+                    holder.time.text = msg._time
+
                     //Toast.makeText(context, "${newList.date}", Toast.LENGTH_SHORT).show()
                 }
             }
