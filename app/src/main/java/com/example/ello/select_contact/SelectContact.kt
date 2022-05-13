@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ello.R
 import com.example.ello.databinding.ActivitySelectContactBinding
 import com.example.ello.main_package.MainActivity
+import java.util.*
 import java.util.Locale.getDefault
 
 
@@ -37,44 +38,47 @@ class SelectContact : AppCompatActivity() {
         binding = ActivitySelectContactBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        newListC = mutableListOf()
+        //newListC.add(ContactModel("alpha", "6767786"))
         listContact = mutableListOf()
-        //newListC.mapTo(listContact!!) { it.copy() }
 
         try {
 
+            getContactsIntoMutableList()
+            /*for (item in listContact!!) {
+                newListC.add(item)
+            }*/
+            newListC.addAll(listContact!!)
 
             binding.searchViewSelectCont.setOnQueryTextListener(object :
                 SearchView.OnQueryTextListener {
 
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                   /* keyWord = mutableListOf()
-                    binding.searchViewSelectCont.clearFocus()
-                    if (keyWord!!.contains(query)) {
+                    /* keyWord = mutableListOf()
+                     binding.searchViewSelectCont.clearFocus()
+                     if (keyWord!!.contains(query)) {
 
-                        listContact!!.filter { it.contact_name == query }
-                        //getContact()
+                         listContact!!.filter { it.contact_name == query }
+                         //getContact()
 
-                    }*/
+                     }*/
 
                     return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     val searchText = newText!!.toLowerCase(getDefault())
-                    if (searchText.isNotEmpty()){
-                        Toast.makeText(applicationContext, "${newListC.size}/n ${listContact!!.size}", Toast.LENGTH_SHORT).show()
-                       if (newListC.size>0){
+                    if (searchText.isNotEmpty()) {
+                        //Toast.makeText(applicationContext, "${newListC.size}/n ${listContact!!.size}", Toast.LENGTH_SHORT).show()
+                        newListC.forEach { name ->
+                            newListC!!.filter { name.contact_name.contains(searchText.toLowerCase(Locale.getDefault())) }
+                                listContact!!.clear()
+                                listContact!!.add(name)
+                                //Toast.makeText(applicationContext, "Add...", Toast.LENGTH_SHORT).show()
+                        }
 
-                           newListC.forEach{ name ->
-                               if (newListC!!.find { it.contact_name.contains(searchText)} == null){
-                                   listContact!!.clear()
-                                   listContact!!.add(name)
-                                   Toast.makeText(applicationContext, "Add...", Toast.LENGTH_SHORT).show()
-                               }
-                           }
-                       }
                         contactAdapter.notifyDataSetChanged()
-                    }else{
+                    } else {
                         listContact!!.clear()
                         listContact!!.addAll(newListC)
                         contactAdapter.notifyDataSetChanged()
@@ -82,8 +86,8 @@ class SelectContact : AppCompatActivity() {
                     return false
                 }
 
-
             })
+
         } catch (Ex: java.lang.Exception) {
             Toast.makeText(this, "${Ex.message}", Toast.LENGTH_SHORT).show()
         }

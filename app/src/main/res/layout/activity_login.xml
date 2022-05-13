@@ -29,14 +29,13 @@
                 android:hint="Country code">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/code"
+                    android:id="@+id/c_code"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone"
                     android:textColor="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -46,7 +45,7 @@
                 android:layout_marginTop="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phone_number"
+                    android:id="@+id/login_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone"

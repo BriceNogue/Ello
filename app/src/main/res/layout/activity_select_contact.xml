@@ -21,12 +21,22 @@
             android:background="@drawable/btn_new_msg_style"
             android:src="@drawable/ic_back" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select contact"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="50dp"
+            android:textSize="15dp"
+            android:textColor="?attr/colorOnPrimary"/>
+
         <SearchView
             android:id="@+id/search_view_select_cont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/btn_more_select_cont"
             android:background="@drawable/btn_new_msg_style"
+            android:foregroundTint="?attr/colorOnPrimary"
             android:layout_centerVertical="true"
             android:layout_marginLeft="19dp"/>
 

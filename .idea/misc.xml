@@ -38,8 +38,9 @@
         <entry key="app/src/main/res/drawable/ic_search_white.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/my_message_style.xml" value="0.174" />
         <entry key="app/src/main/res/drawable/other_message_style.xml" value="0.328" />
+        <entry key="app/src/main/res/drawable/search_bar_style.xml" value="0.1795" />
         <entry key="app/src/main/res/layout/activity_inbox_sms.xml" value="0.19528619528619529" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33177083333333335" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_new_message.xml" value="0.16134751773049646" />
         <entry key="app/src/main/res/layout/activity_searchable.xml" value="0.16134751773049646" />
