@@ -25,10 +25,10 @@ class Login : AppCompatActivity() {
             finish()
         }
 
-        //onResum()
+        onResum()
     }
 
-    /*private fun enableRuntimePermission() {
+    private fun enableRuntimePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this@Login,
                 arrayOf( Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS).toString()
@@ -74,5 +74,5 @@ class Login : AppCompatActivity() {
             viewGroup.visibility = View.VISIBLE
             return false
         }
-    }*/
+    }
 }

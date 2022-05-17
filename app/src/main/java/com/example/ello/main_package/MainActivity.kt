@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
        // onResum()
 
         //openSMSappChooser(this)
-        checkAndRequestPermissions()
+        //checkAndRequestPermissions()
         val rcvmain = findViewById<RecyclerView>(R.id.rcv_main)
         rcvmain.layoutManager = LinearLayoutManager(this)
 
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         btnNewMsg.setOnClickListener() {
             val intent = Intent(this, NewMessage::class.java)
             startActivity(intent)
-            enableRuntimePermission()
+            //enableRuntimePermission()
             finish()
         }
 

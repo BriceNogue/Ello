@@ -42,58 +42,61 @@ class InboxSms : AppCompatActivity() {
         setContentView(R.layout.activity_inbox_sms)
         checkAndRequestPermissions()
 
-        val btnBack = findViewById<ImageButton>(R.id.btn_back_inbox)
+        try {
+            val btnBack = findViewById<ImageButton>(R.id.btn_back_inbox)
+            btnBack.setOnClickListener(){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 
-        btnBack.setOnClickListener(){
-           val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+            val contactName = getIntent().getStringExtra("name")
+            val contactPhone = getIntent().getStringExtra("contact")
+            val phon = getIntent().getStringExtra("phon")
 
-        val contactName = getIntent().getStringExtra("name")
-        val contactPhone = getIntent().getStringExtra("contact")
-        val phon = getIntent().getStringExtra("phon")
+            //val contactpictue = findViewById<ImageView>(R.id.contact_picture_inbox)
+            val phonn = findViewById<TextView>(R.id.contact_name_inbox)
+            val contactname = findViewById<TextView>(R.id.contact_name_inbox)
+            val contactphone = findViewById<TextView>(R.id.contact_phone_inbox)
 
-       //val contactpictue = findViewById<ImageView>(R.id.contact_picture_inbox)
-        val phonn = findViewById<TextView>(R.id.contact_name_inbox)
-        val contactname = findViewById<TextView>(R.id.contact_name_inbox)
-        val contactphone = findViewById<TextView>(R.id.contact_phone_inbox)
+            val rcv = findViewById<RecyclerView>(R.id.rcv_inbox)
+            var layoutManager1 = LinearLayoutManager(this)
+            layoutManager1.setReverseLayout(true)
+            rcv.layoutManager = layoutManager1
 
-        val rcv = findViewById<RecyclerView>(R.id.rcv_inbox)
-        var layoutManager1 = LinearLayoutManager(this)
-        layoutManager1.setReverseLayout(true)
-        rcv.layoutManager = layoutManager1
-
-        if (phon.isNullOrEmpty()){
-            contactname.setText(contactName)
-            displaySms(contactPhone!!)
-        }else{
-            phonn.setText(phon)
-            displaySms(phon!!)
-            for (cont in listContact!!){
-                if (cont.contact_number.equals(phon)){
-                    phonn.setText(cont.contact_name)
+            if (phon.isNullOrEmpty()){
+                contactname.setText(contactName)
+                displaySms(contactPhone!!)
+            }else{
+                phonn.setText(phon)
+                displaySms(phon!!)
+                for (cont in listContact!!){
+                    if (cont.contact_number.equals(phon)){
+                        phonn.setText(cont.contact_name)
+                    }
                 }
             }
-        }
-        contactphone.setText(contactPhone)
+            contactphone.setText(contactPhone)
 
-        val btnSendInbox = findViewById<ImageButton>(R.id.btn_send_sms_inbox)
-        val msgI = findViewById<EditText>(R.id.message_inbox)
+            val btnSendInbox = findViewById<ImageButton>(R.id.btn_send_sms_inbox)
+            val msgI = findViewById<EditText>(R.id.message_inbox)
 
-        btnSendInbox.setOnClickListener(){
-            var msg = msgI.text.toString()
-            if (phon.isNullOrEmpty()){
+            btnSendInbox.setOnClickListener(){
+                var msg = msgI.text.toString()
+                if (phon.isNullOrEmpty()){
 
-                sendSMS(contactPhone!!,msg)
-                msgI.text.clear()
+                    sendSMS(contactPhone!!,msg)
+                    msgI.text.clear()
 
-            }else{
+                }else{
 
-                sendSMS(phon,msg)
-                msgI.text.clear()
+                    sendSMS(phon,msg)
+                    msgI.text.clear()
 
+                }
             }
+        }catch (Ex : Exception){
+
         }
 
     }
